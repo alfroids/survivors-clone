@@ -1,23 +1,34 @@
-[gd_scene load_steps=8 format=3 uid="uid://b1kan3wtv5trr"]
+[gd_scene load_steps=12 format=3 uid="uid://b1kan3wtv5trr"]
 
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="1_54a1r"]
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_r2jj5"]
 [ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="2_xuysw"]
 [ext_resource type="Script" path="res://Hurtbox/hurtbox.gd" id="4_fjgfo"]
+[ext_resource type="Script" path="res://Hitbox/hitbox.gd" id="4_jtv4c"]
+[ext_resource type="Script" path="res://DamageData/damage_data.gd" id="5_2gdeb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o12hw"]
 shader = ExtResource("2_xuysw")
 shader_parameter/NewColor = Color(0.93, 0.1209, 0.20181, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jq8ny"]
-size = Vector2(110, 110)
+size = Vector2(64, 64)
+
+[sub_resource type="Resource" id="Resource_hqdee"]
+script = ExtResource("5_2gdeb")
+damage_per_tick = 1
+total_ticks = 0
+ticks_frequency = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n5acj"]
+radius = 104.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dlm14"]
 size = Vector2(128, 128)
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 4
-collision_mask = 0
+collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_r2jj5")
 
@@ -28,10 +39,30 @@ texture = ExtResource("1_54a1r")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jq8ny")
 
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+script = ExtResource("4_jtv4c")
+damage_data = SubResource("Resource_hqdee")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_n5acj")
+
 [node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
 script = ExtResource("4_fjgfo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_dlm14")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -64.0
+offset_top = -96.0
+offset_right = 64.0
+offset_bottom = -69.0
+show_percentage = false
 
 [connection signal="received_damage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
