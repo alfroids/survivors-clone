@@ -1,14 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://ttxhlnfnbwp0"]
+[gd_scene load_steps=6 format=3 uid="uid://ttxhlnfnbwp0"]
 
+[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="1_37jq6"]
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="1_yc8kb"]
 [ext_resource type="PackedScene" uid="uid://s8aop3m7u4gi" path="res://Player/player.tscn" id="2_44pw7"]
 [ext_resource type="PackedScene" uid="uid://b1kan3wtv5trr" path="res://Enemy/enemy.tscn" id="3_rxeap"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_38qxr"]
+shader = ExtResource("1_37jq6")
+shader_parameter/NewColor = Color(0.431373, 0.431373, 0.431373, 0.392157)
+
 [node name="World" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
-modulate = Color(0.176419, 0.176419, 0.176419, 0.501961)
 texture_repeat = 2
+material = SubResource("ShaderMaterial_38qxr")
 texture = ExtResource("1_yc8kb")
 region_enabled = true
 region_rect = Rect2(-4000, -4000, 4000, 4000)

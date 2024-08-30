@@ -1,20 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://s8aop3m7u4gi"]
+[gd_scene load_steps=7 format=3 uid="uid://s8aop3m7u4gi"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_o5dgi"]
+[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="2_624hf"]
+[ext_resource type="PackedScene" uid="uid://kojtmbc8ypc" path="res://Fireball/fireball.tscn" id="2_r1fem"]
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="2_rle6d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_unfu4"]
+shader = ExtResource("2_624hf")
+shader_parameter/NewColor = Color(0, 0.501961, 1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q3kxg"]
 size = Vector2(110, 110)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-modulate = Color(0.407843, 0.862745, 0.133333, 1)
 collision_layer = 2
 collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_o5dgi")
+fireball_scene = ExtResource("2_r1fem")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_unfu4")
 texture = ExtResource("2_rle6d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_q3kxg")
+
+[node name="ShootTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="ShootTimer" to="." method="autoshoot"]

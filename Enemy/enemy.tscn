@@ -1,20 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1kan3wtv5trr"]
+[gd_scene load_steps=8 format=3 uid="uid://b1kan3wtv5trr"]
 
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="1_54a1r"]
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_r2jj5"]
+[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="2_xuysw"]
+[ext_resource type="Script" path="res://Hurtbox/hurtbox.gd" id="4_fjgfo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o12hw"]
+shader = ExtResource("2_xuysw")
+shader_parameter/NewColor = Color(0.93, 0.1209, 0.20181, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jq8ny"]
 size = Vector2(110, 110)
 
-[node name="Enemy" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dlm14"]
+size = Vector2(128, 128)
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 4
 collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_r2jj5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.909804, 0.0901961, 0.152941, 1)
+material = SubResource("ShaderMaterial_o12hw")
 texture = ExtResource("1_54a1r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jq8ny")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+script = ExtResource("4_fjgfo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_dlm14")
+
+[connection signal="received_damage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]

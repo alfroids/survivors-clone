@@ -15,3 +15,9 @@ func movement() -> void:
 	var move_dir: Vector2 = global_position.direction_to(player.global_position)
 	velocity = move_speed * move_dir
 	move_and_slide()
+
+
+func _on_hurtbox_received_damage(damage_data: DamageData) -> void:
+	health_points -= damage_data.damage_per_tick
+	if health_points <= 0:
+		queue_free()
