@@ -1,18 +1,25 @@
+class_name Enemy
 extends CharacterBody2D
 
 
-@export var max_health: int = 10
-@export var move_speed: float = 100.0
+@export var enemy_data: EnemyData
 
-@onready var player: CharacterBody2D = get_tree().get_first_node_in_group(&"player") as CharacterBody2D
-@onready var health_bar: ProgressBar = $HealthBar as ProgressBar
-@onready var health: int = max_health:
+var max_health: int
+var move_speed: float
+var health: int:
 	set(h):
 		health = clampi(h, 0, max_health)
 		health_bar.value = health
 
+@onready var player: CharacterBody2D = get_tree().get_first_node_in_group(&"player") as CharacterBody2D
+@onready var health_bar: ProgressBar = $HealthBar as ProgressBar
+
 
 func _ready() -> void:
+	max_health = enemy_data.max_health
+	move_speed = enemy_data.move_speed
+	health = max_health
+
 	health_bar.max_value = max_health
 	health_bar.value = health
 

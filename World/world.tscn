@@ -3,7 +3,7 @@
 [ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="1_37jq6"]
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="1_yc8kb"]
 [ext_resource type="PackedScene" uid="uid://s8aop3m7u4gi" path="res://Player/player.tscn" id="2_44pw7"]
-[ext_resource type="PackedScene" uid="uid://b1kan3wtv5trr" path="res://Enemy/enemy.tscn" id="3_rxeap"]
+[ext_resource type="PackedScene" uid="uid://mp0jyph8nc4y" path="res://EnemySpawner/enemy_spawner.tscn" id="4_mpkwq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_38qxr"]
 shader = ExtResource("1_37jq6")
@@ -24,5 +24,4 @@ region_rect = Rect2(-4000, -4000, 4000, 4000)
 process_callback = 0
 position_smoothing_enabled = true
 
-[node name="Enemy" parent="." instance=ExtResource("3_rxeap")]
-position = Vector2(-319, 146)
+[node name="EnemySpawner" parent="Player" instance=ExtResource("4_mpkwq")]
