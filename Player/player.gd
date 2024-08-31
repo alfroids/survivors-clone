@@ -10,6 +10,9 @@ extends CharacterBody2D
 	set(h):
 		health = clampi(h, 0, max_health)
 		health_bar.value = health
+@onready var total_xp: int = 0
+@onready var current_xp: int = 0
+@onready var level: int = 1
 
 
 func _ready() -> void:
@@ -50,3 +53,10 @@ func _on_shoot_timer_timeout() -> void:
 
 func _on_hurtbox_received_damage(damage_data: DamageData) -> void:
 	health -= damage_data.damage_per_tick
+
+
+func _on_loot_range_area_entered(area: Area2D) -> void:
+	if area is XP:
+		var collected_xp: int = (area as XP).collect(self)
+		total_xp += collected_xp
+		current_xp += collected_xp
