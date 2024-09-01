@@ -17,9 +17,14 @@ var health: int:
 
 
 func _ready() -> void:
+	if enemy_data.texture:
+		($Sprite2D as Sprite2D).texture = enemy_data.texture
+
 	max_health = enemy_data.max_health
 	move_speed = enemy_data.move_speed
 	health = max_health
+
+	($Hitbox as Hitbox).damage_data = enemy_data.damage_data
 
 	health_bar.max_value = max_health
 	health_bar.value = health

@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://ttxhlnfnbwp0"]
+[gd_scene load_steps=7 format=3 uid="uid://ttxhlnfnbwp0"]
 
 [ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="1_37jq6"]
+[ext_resource type="PackedScene" uid="uid://dbfmbbtlx0udj" path="res://UI/ui.tscn" id="1_bpf7e"]
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="1_yc8kb"]
 [ext_resource type="PackedScene" uid="uid://s8aop3m7u4gi" path="res://Player/player.tscn" id="2_44pw7"]
 [ext_resource type="PackedScene" uid="uid://mp0jyph8nc4y" path="res://EnemySpawner/enemy_spawner.tscn" id="4_mpkwq"]
@@ -10,6 +11,10 @@ shader = ExtResource("1_37jq6")
 shader_parameter/NewColor = Color(0.431373, 0.431373, 0.431373, 0.392157)
 
 [node name="World" type="Node2D"]
+
+[node name="Foreground" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="Foreground" instance=ExtResource("1_bpf7e")]
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2

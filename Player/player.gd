@@ -1,6 +1,9 @@
 extends CharacterBody2D
 
 
+signal leveled_up(new_level: int, xp_to_next_level: int)
+signal current_xp_changed(new_current_xp: int)
+
 @export var max_health: int = 100
 @export var move_speed: float = 200.0
 @export var fireball_scene: PackedScene
@@ -16,8 +19,13 @@ extends CharacterBody2D
 
 
 func _ready() -> void:
+	leveled_up.connect(SignalBus._on_player_leveled_up)
+	current_xp_changed.connect(SignalBus._on_player_current_xp_changed)
+
 	health_bar.max_value = max_health
 	health_bar.value = health
+
+	leveled_up.emit(level, 1000)
 
 
 func _physics_process(_delta: float) -> void:
@@ -60,3 +68,10 @@ func _on_loot_range_area_entered(area: Area2D) -> void:
 		var collected_xp: int = (area as XP).collect(self)
 		total_xp += collected_xp
 		current_xp += collected_xp
+
+		while current_xp >= 1000:
+			current_xp -= 1000
+			level += 1
+			leveled_up.emit(level, 1000)
+
+		current_xp_changed.emit(current_xp)

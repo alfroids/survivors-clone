@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbfmbbtlx0udj"]
+
+[ext_resource type="Script" path="res://UI/ui_controller.gd" id="1_c0nfk"]
+[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="1_f445u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ex5do"]
+shader = ExtResource("1_f445u")
+shader_parameter/NewColor = Color(0.756863, 0.145098, 0.780392, 1)
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c0nfk")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LevelProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ex5do")
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+show_percentage = false
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/VBoxContainer/LevelProgressBar"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "LVL 00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.392157)
