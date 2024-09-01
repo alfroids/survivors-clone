@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 
 @export var enemy_data: EnemyData
+@export var xp_scene: PackedScene
 
 var max_health: int
 var move_speed: float
@@ -36,5 +37,21 @@ func movement() -> void:
 
 func _on_hurtbox_received_damage(damage_data: DamageData) -> void:
 	health -= damage_data.damage_per_tick
+
 	if not health:
+		@warning_ignore("integer_division")
+		for i in range(enemy_data.xp_drop / 100):
+			spawn_xp(100)
+		spawn_xp(enemy_data.xp_drop % 100)
+
 		queue_free()
+
+
+func spawn_xp(xp_amount: int) -> void:
+	if xp_amount <= 0:
+		return
+
+	var xp: XP = xp_scene.instantiate()
+	xp.xp_amount = xp_amount
+	xp.global_position = global_position + Utils.random_point_in_circle(50.0)
+	get_tree().current_scene.call_deferred(&"add_child", xp)

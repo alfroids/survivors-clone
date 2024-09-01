@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://b1kan3wtv5trr"]
+[gd_scene load_steps=15 format=3 uid="uid://b1kan3wtv5trr"]
 
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="1_54a1r"]
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_r2jj5"]
 [ext_resource type="Script" path="res://EnemyData/enemy_data.gd" id="2_ouuid"]
 [ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="2_xuysw"]
+[ext_resource type="PackedScene" uid="uid://bxs0p7ry7bwps" path="res://XP/xp.tscn" id="3_py0fd"]
 [ext_resource type="Script" path="res://Hurtbox/hurtbox.gd" id="4_fjgfo"]
 [ext_resource type="Script" path="res://Hitbox/hitbox.gd" id="4_jtv4c"]
 [ext_resource type="Script" path="res://DamageData/damage_data.gd" id="5_2gdeb"]
@@ -12,6 +13,7 @@
 script = ExtResource("2_ouuid")
 max_health = 10
 move_speed = 100.0
+xp_drop = 350
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o12hw"]
 shader = ExtResource("2_xuysw")
@@ -38,6 +40,7 @@ collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_r2jj5")
 enemy_data = SubResource("Resource_7wh8l")
+xp_scene = ExtResource("3_py0fd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_o12hw")
