@@ -1,11 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbfmbbtlx0udj"]
+[gd_scene load_steps=2 format=3 uid="uid://dbfmbbtlx0udj"]
 
 [ext_resource type="Script" path="res://UI/ui_controller.gd" id="1_c0nfk"]
-[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="1_f445u"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ex5do"]
-shader = ExtResource("1_f445u")
-shader_parameter/NewColor = Color(0.756863, 0.145098, 0.780392, 1)
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -34,7 +29,7 @@ theme_override_constants/separation = 20
 
 [node name="LevelProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_ex5do")
+modulate = Color(0.89, 0.2136, 0.664533, 1)
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 show_percentage = false

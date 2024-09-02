@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://s8aop3m7u4gi"]
+[gd_scene load_steps=10 format=3 uid="uid://s8aop3m7u4gi"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_o5dgi"]
 [ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="2_624hf"]
@@ -8,17 +8,13 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_unfu4"]
 shader = ExtResource("2_624hf")
-shader_parameter/NewColor = Color(0, 0.501961, 1, 1)
+shader_parameter/NewColor = Color(0.45, 1, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q3kxg"]
 size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_negou"]
 size = Vector2(112, 112)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j4yfg"]
-shader = ExtResource("2_624hf")
-shader_parameter/NewColor = Color(0.194985, 0.711396, 0.0425883, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ud1hn"]
 radius = 256.0
@@ -34,12 +30,14 @@ material = SubResource("ShaderMaterial_unfu4")
 texture = ExtResource("2_rle6d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_q3kxg")
 
 [node name="ShootTimer" type="Timer" parent="."]
 autostart = true
 
 [node name="Hurtbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 16
 collision_mask = 0
 monitoring = false
@@ -49,7 +47,6 @@ script = ExtResource("5_4ubwm")
 shape = SubResource("RectangleShape2D_negou")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
-material = SubResource("ShaderMaterial_j4yfg")
 offset_left = -64.0
 offset_top = -96.0
 offset_right = 64.0
@@ -58,6 +55,7 @@ size_flags_horizontal = 4
 show_percentage = false
 
 [node name="LootRange" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 8
 monitorable = false

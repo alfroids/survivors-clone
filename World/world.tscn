@@ -16,7 +16,11 @@ shader_parameter/NewColor = Color(0.431373, 0.431373, 0.431373, 0.392157)
 
 [node name="UI" parent="Foreground" instance=ExtResource("1_bpf7e")]
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+follow_viewport_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_38qxr")
 texture = ExtResource("1_yc8kb")

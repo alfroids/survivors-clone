@@ -12,7 +12,6 @@ point_count = 2
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_008bg"]
 resource_local_to_scene = true
 shader = ExtResource("1_lo8g3")
-shader_parameter/AnimationSpeed2 = 4.0
 shader_parameter/XPColor = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jubxd"]
@@ -31,4 +30,5 @@ scale = Vector2(0.125, 0.1875)
 texture = ExtResource("2_ntmc2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_jubxd")

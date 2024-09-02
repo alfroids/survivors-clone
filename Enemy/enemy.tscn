@@ -24,7 +24,7 @@ xp_drop = 350
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o12hw"]
 shader = ExtResource("2_xuysw")
-shader_parameter/NewColor = Color(0.93, 0.1209, 0.20181, 1)
+shader_parameter/NewColor = Color(1, 0.0666667, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jq8ny"]
 size = Vector2(64, 64)
@@ -47,9 +47,11 @@ material = SubResource("ShaderMaterial_o12hw")
 texture = ExtResource("1_54a1r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_jq8ny")
 
 [node name="Hitbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 16
 monitorable = false
@@ -59,6 +61,7 @@ script = ExtResource("4_jtv4c")
 shape = SubResource("CircleShape2D_n5acj")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 32
 collision_mask = 0
 monitoring = false
