@@ -11,3 +11,7 @@ func _on_player_leveled_up(new_level: int, xp_to_next_level: int) -> void:
 
 func _on_player_current_xp_changed(new_current_xp: int) -> void:
 	player_current_xp_changed.emit(new_current_xp)
+
+
+func _on_ui_hidden() -> void:
+	pass

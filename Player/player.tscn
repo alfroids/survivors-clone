@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://s8aop3m7u4gi"]
+[gd_scene load_steps=11 format=3 uid="uid://s8aop3m7u4gi"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_o5dgi"]
-[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="2_624hf"]
-[ext_resource type="PackedScene" uid="uid://kojtmbc8ypc" path="res://Fireball/fireball.tscn" id="2_r1fem"]
+[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://Shaders/recolor.tres" id="2_624hf"]
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="2_rle6d"]
 [ext_resource type="Script" path="res://Hurtbox/hurtbox.gd" id="5_4ubwm"]
+[ext_resource type="PackedScene" uid="uid://b1o71rylv2pet" path="res://Components/HealthComponent/health_component.tscn" id="6_avyd6"]
+[ext_resource type="PackedScene" uid="uid://7gbff40kiaef" path="res://Components/FireballAttackComponent/fireball_attack_component.tscn" id="8_ipt57"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_unfu4"]
 shader = ExtResource("2_624hf")
-shader_parameter/NewColor = Color(0.45, 1, 0, 1)
+shader_parameter/NewColor = Color(0.316667, 1, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q3kxg"]
 size = Vector2(64, 64)
@@ -23,7 +24,6 @@ radius = 256.0
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_o5dgi")
-fireball_scene = ExtResource("2_r1fem")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_unfu4")
@@ -32,9 +32,6 @@ texture = ExtResource("2_rle6d")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("RectangleShape2D_q3kxg")
-
-[node name="ShootTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="Hurtbox" type="Area2D" parent="."]
 visible = false
@@ -46,14 +43,6 @@ script = ExtResource("5_4ubwm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_negou")
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-offset_left = -64.0
-offset_top = -96.0
-offset_right = 64.0
-offset_bottom = -69.0
-size_flags_horizontal = 4
-show_percentage = false
-
 [node name="LootRange" type="Area2D" parent="."]
 visible = false
 collision_layer = 0
@@ -63,6 +52,10 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LootRange"]
 shape = SubResource("CircleShape2D_ud1hn")
 
-[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[node name="HealthComponent" parent="." instance=ExtResource("6_avyd6")]
+position = Vector2(0, -88)
+
+[node name="FireballAttackComponent" parent="." instance=ExtResource("8_ipt57")]
+
 [connection signal="received_damage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
 [connection signal="area_entered" from="LootRange" to="." method="_on_loot_range_area_entered"]

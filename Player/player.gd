@@ -1,18 +1,22 @@
+class_name Player
 extends CharacterBody2D
 
 
 signal leveled_up(new_level: int, xp_to_next_level: int)
 signal current_xp_changed(new_current_xp: int)
 
-@export var max_health: int = 100
-@export var move_speed: float = 200.0
-@export var fireball_scene: PackedScene
+#enum STATS {
+	#HEALTH,
+	#ARMOR,
+	#MOVE_SPEED,
+	#ATTACK_DAMAGE_MULTIPLIER,
+	#ATTACK_SPEED_MULTIPLIER,
+	#FIREBALL,
+#}
 
-@onready var health_bar: ProgressBar = $HealthBar as ProgressBar
-@onready var health: int = max_health:
-	set(h):
-		health = clampi(h, 0, max_health)
-		health_bar.value = health
+@export var move_speed: float = 200.0
+
+@onready var health_component: HealthComponent = $HealthComponent as HealthComponent
 @onready var total_xp: int = 0
 @onready var current_xp: int = 0
 @onready var level: int = 1
@@ -21,9 +25,6 @@ signal current_xp_changed(new_current_xp: int)
 func _ready() -> void:
 	leveled_up.connect(SignalBus._on_player_leveled_up)
 	current_xp_changed.connect(SignalBus._on_player_current_xp_changed)
-
-	health_bar.max_value = max_health
-	health_bar.value = health
 
 	leveled_up.emit(level, 1000)
 
@@ -38,29 +39,8 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 
-func _on_shoot_timer_timeout() -> void:
-	var closest_enemy: CharacterBody2D
-	var closest_distsq: float = INF
-
-	for enemy: CharacterBody2D in get_tree().get_nodes_in_group(&"enemies"):
-		var enemy_distsq: float = global_position.distance_squared_to(enemy.global_position)
-		if enemy_distsq < closest_distsq:
-			closest_enemy = enemy
-			closest_distsq = enemy_distsq
-
-	if not closest_enemy:
-		return
-
-	var direction: Vector2 = global_position.direction_to(closest_enemy.global_position)
-	var fireball: Fireball = fireball_scene.instantiate() as Fireball
-	fireball.position = position
-	fireball.direction = direction
-	fireball.top_level = true
-	add_child(fireball)
-
-
 func _on_hurtbox_received_damage(damage_data: DamageData) -> void:
-	health -= damage_data.damage_per_tick
+	var _died: bool = health_component.take_damage(damage_data.damage_per_tick)
 
 
 func _on_loot_range_area_entered(area: Area2D) -> void:

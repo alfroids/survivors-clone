@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="1_54a1r"]
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_r2jj5"]
 [ext_resource type="Script" path="res://EnemyData/enemy_data.gd" id="2_ouuid"]
-[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="2_xuysw"]
+[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://Shaders/recolor.tres" id="2_xuysw"]
 [ext_resource type="PackedScene" uid="uid://bxs0p7ry7bwps" path="res://XP/xp.tscn" id="3_py0fd"]
 [ext_resource type="Script" path="res://Hurtbox/hurtbox.gd" id="4_fjgfo"]
 [ext_resource type="Script" path="res://Hitbox/hitbox.gd" id="4_jtv4c"]

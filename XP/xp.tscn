@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bxs0p7ry7bwps"]
 
 [ext_resource type="Script" path="res://XP/xp.gd" id="1_fkvtv"]
-[ext_resource type="Shader" uid="uid://dpcy4a4xgx7p0" path="res://xp.tres" id="1_lo8g3"]
+[ext_resource type="Shader" uid="uid://dpcy4a4xgx7p0" path="res://Shaders/xp.tres" id="1_lo8g3"]
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="2_ntmc2"]
 
 [sub_resource type="Curve" id="Curve_lsmkd"]

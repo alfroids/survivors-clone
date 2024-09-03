@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://kojtmbc8ypc"]
 
 [ext_resource type="Script" path="res://Fireball/fireball.gd" id="1_56py6"]
-[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://recolor.tres" id="1_e7uuv"]
+[ext_resource type="Shader" uid="uid://y682225ucbre" path="res://Shaders/recolor.tres" id="1_e7uuv"]
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="2_313am"]
 [ext_resource type="Script" path="res://Hitbox/hitbox.gd" id="3_y52ev"]
 [ext_resource type="Script" path="res://DamageData/damage_data.gd" id="5_ars3j"]
