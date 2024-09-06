@@ -2,52 +2,26 @@ class_name Enemy
 extends CharacterBody2D
 
 
-@export var enemy_data: EnemyData
+@export var xp_drop: int = 50
 @export var xp_scene: PackedScene
 
-var max_health: int
-var move_speed: float
-var health: int:
-	set(h):
-		health = clampi(h, 0, max_health)
-		health_bar.value = health
-
-@onready var player: CharacterBody2D = get_tree().get_first_node_in_group(&"player") as CharacterBody2D
-@onready var health_bar: ProgressBar = $HealthBar as ProgressBar
+@onready var target: Player = get_tree().get_first_node_in_group(&"player") as Player
+@onready var health_component: HealthComponent = $HealthComponent as HealthComponent
+@onready var state_machine: StateMachine = $StateMachine as StateMachine
 
 
-func _ready() -> void:
-	if enemy_data.texture:
-		($Sprite2D as Sprite2D).texture = enemy_data.texture
-
-	max_health = enemy_data.max_health
-	move_speed = enemy_data.move_speed
-	health = max_health
-
-	($Hitbox as Hitbox).damage_data = enemy_data.damage_data
-
-	health_bar.max_value = max_health
-	health_bar.value = health
-
-
-func _physics_process(_delta: float) -> void:
-	movement()
-
-
-func movement() -> void:
-	var move_dir: Vector2 = global_position.direction_to(player.global_position)
-	velocity = move_speed * move_dir
-	move_and_slide()
+func _physics_process(delta: float) -> void:
+	state_machine.physics_update(delta)
 
 
 func _on_hurtbox_received_damage(damage_data: DamageData) -> void:
-	health -= damage_data.damage_per_tick
+	var died: bool = health_component.take_damage(damage_data.damage_per_tick)
 
-	if not health:
+	if died:
 		@warning_ignore("integer_division")
-		for i in range(enemy_data.xp_drop / 100):
+		for i in range(xp_drop / 100):
 			spawn_xp(100)
-		spawn_xp(enemy_data.xp_drop % 100)
+		spawn_xp(xp_drop % 100)
 
 		queue_free()
 

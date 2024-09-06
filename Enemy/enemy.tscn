@@ -1,26 +1,17 @@
-[gd_scene load_steps=15 format=3 uid="uid://b1kan3wtv5trr"]
+[gd_scene load_steps=18 format=3 uid="uid://b1kan3wtv5trr"]
 
 [ext_resource type="Texture2D" uid="uid://bor6xfqb3k54d" path="res://icon.svg" id="1_54a1r"]
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_r2jj5"]
-[ext_resource type="Script" path="res://EnemyData/enemy_data.gd" id="2_ouuid"]
 [ext_resource type="Shader" uid="uid://y682225ucbre" path="res://Shaders/recolor.tres" id="2_xuysw"]
 [ext_resource type="PackedScene" uid="uid://bxs0p7ry7bwps" path="res://XP/xp.tscn" id="3_py0fd"]
 [ext_resource type="Script" path="res://Hurtbox/hurtbox.gd" id="4_fjgfo"]
 [ext_resource type="Script" path="res://Hitbox/hitbox.gd" id="4_jtv4c"]
 [ext_resource type="Script" path="res://DamageData/damage_data.gd" id="5_2gdeb"]
-
-[sub_resource type="Resource" id="Resource_76dh3"]
-script = ExtResource("5_2gdeb")
-damage_per_tick = 2
-total_ticks = 0
-ticks_frequency = 1.0
-
-[sub_resource type="Resource" id="Resource_7wh8l"]
-script = ExtResource("2_ouuid")
-max_health = 10
-move_speed = 100.0
-damage_data = SubResource("Resource_76dh3")
-xp_drop = 350
+[ext_resource type="PackedScene" uid="uid://b1o71rylv2pet" path="res://Components/HealthComponent/health_component.tscn" id="9_mql68"]
+[ext_resource type="Script" path="res://StateMachine/state_machine.gd" id="10_unvxc"]
+[ext_resource type="Script" path="res://Enemy/idle_state.gd" id="11_2usdp"]
+[ext_resource type="Script" path="res://Enemy/chase_state.gd" id="12_eg4yh"]
+[ext_resource type="Script" path="res://Enemy/attack_state.gd" id="13_kng0s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o12hw"]
 shader = ExtResource("2_xuysw")
@@ -29,8 +20,14 @@ shader_parameter/NewColor = Color(1, 0.0666667, 0, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jq8ny"]
 size = Vector2(64, 64)
 
+[sub_resource type="Resource" id="Resource_7egi3"]
+script = ExtResource("5_2gdeb")
+damage_per_tick = 1.0
+total_ticks = 0
+ticks_frequency = 2.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_n5acj"]
-radius = 104.0
+radius = 120.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dlm14"]
 size = Vector2(128, 128)
@@ -39,7 +36,6 @@ size = Vector2(128, 128)
 collision_layer = 4
 motion_mode = 1
 script = ExtResource("1_r2jj5")
-enemy_data = SubResource("Resource_7wh8l")
 xp_scene = ExtResource("3_py0fd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -56,6 +52,7 @@ collision_layer = 0
 collision_mask = 16
 monitorable = false
 script = ExtResource("4_jtv4c")
+damage_data = SubResource("Resource_7egi3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_n5acj")
@@ -70,11 +67,26 @@ script = ExtResource("4_fjgfo")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_dlm14")
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-offset_left = -64.0
-offset_top = -96.0
-offset_right = 64.0
-offset_bottom = -69.0
-show_percentage = false
+[node name="HealthComponent" parent="." instance=ExtResource("9_mql68")]
+position = Vector2(0, -88)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
+script = ExtResource("10_unvxc")
+default_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("chase_state")]
+script = ExtResource("11_2usdp")
+chase_state = NodePath("../Chase")
+
+[node name="Chase" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "attack_state")]
+script = ExtResource("12_eg4yh")
+move_speed = 100.0
+idle_state = NodePath("../Idle")
+attack_state = NodePath("../Attack")
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "chase_state")]
+script = ExtResource("13_kng0s")
+idle_state = NodePath("../Idle")
+chase_state = NodePath("../Chase")
 
 [connection signal="received_damage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]

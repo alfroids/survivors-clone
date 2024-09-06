@@ -5,7 +5,8 @@ extends Node2D
 @export_range(1.0, 100.0, 1.0, "or_greater") var max_health: float = 10.0:
 	set(mh):
 		max_health = maxf(0.0, mh)
-		health_bar.max_value = max_health
+		if health_bar:
+			health_bar.max_value = max_health
 @export var allow_shield: bool = false
 
 var lost_health: float:
